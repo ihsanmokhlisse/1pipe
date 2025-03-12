@@ -2,7 +2,7 @@ repository:
   name: 1pipe
   description: Development architecture patterns and CICD workflow templates
   homepage: https://github.com/ihsanmokhlisse/1pipe
-  private: false
+  private: true
   has_issues: true
   has_projects: true
   has_wiki: true
