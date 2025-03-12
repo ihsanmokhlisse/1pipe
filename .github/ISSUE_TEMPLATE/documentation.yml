@@ -1,0 +1,92 @@
+name: 📚 Documentation Update
+description: Suggest improvements or report issues in documentation
+title: "[DOCS] "
+labels: ["documentation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping us improve our documentation!
+        
+        Please provide details about what needs to be updated or added.
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: Type of Documentation Change
+      description: What type of documentation change are you proposing?
+      options:
+        - New Documentation
+        - Update Existing Documentation
+        - Fix Errors/Typos
+        - Translation
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: location
+    attributes:
+      label: Documentation Location
+      description: Where is the documentation you want to modify? (URL or file path)
+      placeholder: "e.g., /docs/getting-started.md or https://docs.example.com/getting-started"
+
+  - type: textarea
+    id: current-state
+    attributes:
+      label: Current State
+      description: What does the current documentation say? (if applicable)
+      placeholder: Please quote or describe the current documentation content.
+
+  - type: textarea
+    id: proposed-changes
+    attributes:
+      label: Proposed Changes
+      description: What changes would you like to see?
+      placeholder: Describe your suggested improvements or additions in detail.
+    validations:
+      required: true
+
+  - type: textarea
+    id: justification
+    attributes:
+      label: Justification
+      description: Why are these changes needed?
+      placeholder: Explain why these documentation changes would be helpful.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: impact
+    attributes:
+      label: User Impact
+      description: Who will benefit from this documentation change?
+      options:
+        - New Users
+        - Experienced Users
+        - Developers
+        - System Administrators
+        - All Users
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-info
+    attributes:
+      label: Additional Information
+      description: Any other context or screenshots about the documentation update
+      placeholder: Add any other context or screenshots about the documentation update here.
+
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: Prerequisites
+      description: Please verify that you've completed these steps
+      options:
+        - label: I have searched the existing documentation
+          required: true
+        - label: I have checked for existing issues about this documentation
+          required: true
+        - label: I agree to follow this project's Code of Conduct
+          required: true 

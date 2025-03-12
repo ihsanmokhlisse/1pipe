@@ -1,0 +1,108 @@
+name: 🐛 Bug Report
+description: Create a report to help us improve
+title: "[BUG] "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+        
+        Please provide as much detail as possible to help us resolve the issue quickly.
+
+  - type: input
+    id: affected-version
+    attributes:
+      label: Affected Version
+      description: What version of the software are you running?
+      placeholder: "e.g., v1.0.0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: environment
+    attributes:
+      label: Environment
+      description: Where is this bug occurring?
+      options:
+        - Development
+        - Staging
+        - Production
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Describe the bug in detail
+      placeholder: A clear and concise description of what the bug is.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction-steps
+    attributes:
+      label: Steps To Reproduce
+      description: Steps to reproduce the behavior
+      placeholder: |
+        1. Go to '...'
+        2. Click on '....'
+        3. Scroll down to '....'
+        4. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected Behavior
+      description: What did you expect to happen?
+      placeholder: A clear and concise description of what you expected to happen.
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant Log Output
+      description: Please copy and paste any relevant log output. This will be automatically formatted into code.
+      render: shell
+
+  - type: textarea
+    id: environment-details
+    attributes:
+      label: Environment Details
+      description: |
+        Examples:
+          - **OS**: Ubuntu 20.04
+          - **Browser**: Chrome 88.0.4324.150
+          - **Node Version**: 14.15.5
+      value: |
+        - OS:
+        - Browser:
+        - Node Version:
+      render: markdown
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How critical is this bug?
+      options:
+        - Critical (System Down)
+        - High (Major Feature Broken)
+        - Medium (Non-Critical Feature Issue)
+        - Low (Minor Issue)
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our [Code of Conduct](../CODE_OF_CONDUCT.md)
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true 

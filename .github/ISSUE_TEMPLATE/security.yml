@@ -1,0 +1,115 @@
+name: 🔒 Security Issue
+description: Report a security vulnerability
+title: "[SECURITY] "
+labels: ["security", "confidential"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping us keep our project secure!
+        
+        ⚠️ **IMPORTANT**: If this is a critical security vulnerability, please report it directly to our security team instead of creating a public issue.
+        
+        For critical vulnerabilities, email: security@example.com
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      description: How severe is this security issue?
+      options:
+        - Critical (Immediate Exploitation Risk)
+        - High (Significant Security Impact)
+        - Medium (Limited Impact)
+        - Low (Minimal Risk)
+        - Informational
+    validations:
+      required: true
+
+  - type: textarea
+    id: vulnerability-description
+    attributes:
+      label: Vulnerability Description
+      description: Describe the security vulnerability
+      placeholder: |
+        Please provide:
+        - Clear description of the security issue
+        - Attack scenario (if applicable)
+        - Potential impact
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction-steps
+    attributes:
+      label: Steps To Reproduce
+      description: How can we reproduce this security issue?
+      placeholder: |
+        1. Configure '...'
+        2. Make request to '...'
+        3. Modify the '...'
+        4. See vulnerability
+    validations:
+      required: true
+
+  - type: textarea
+    id: technical-details
+    attributes:
+      label: Technical Details
+      description: Provide any technical details that could help us understand and fix the issue
+      placeholder: |
+        - Affected components
+        - Relevant code snippets
+        - Tools or methods used
+        - CVE references (if any)
+
+  - type: textarea
+    id: mitigation-suggestion
+    attributes:
+      label: Suggested Mitigation
+      description: Do you have any suggestions for how we could fix this?
+      placeholder: Describe any potential fixes or mitigations you've considered.
+
+  - type: input
+    id: affected-versions
+    attributes:
+      label: Affected Versions
+      description: What versions of our project are affected?
+      placeholder: "e.g., v1.0.0 - v1.2.3"
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment-details
+    attributes:
+      label: Environment Details
+      description: Please provide relevant environment details
+      value: |
+        - OS:
+        - Platform:
+        - Other relevant details:
+      render: markdown
+
+  - type: checkboxes
+    id: security-checklist
+    attributes:
+      label: Security Report Checklist
+      description: Please verify that you've completed these steps
+      options:
+        - label: I have checked that this issue hasn't been reported before
+          required: true
+        - label: I have verified this is a legitimate security concern
+          required: true
+        - label: I have provided all the necessary information to understand the impact
+          required: true
+        - label: I agree to follow responsible disclosure practices
+          required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ### Next Steps
+        1. Our security team will review your report
+        2. We will assess the impact and priority
+        3. We will work on a fix and keep you updated
+        4. We will coordinate the disclosure timeline with you 
