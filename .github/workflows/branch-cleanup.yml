@@ -4,30 +4,38 @@ on:
     types: [closed]
 
 jobs:
-  delete-branch:
+  cleanup-branch:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true
     steps:
-      - name: Wait for 1 hour
-        run: sleep 3600
-        
-      - name: Delete branch
+      - name: Check branch type
+        id: check-branch
         uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const branch = context.payload.pull_request.head.ref;
-            if (branch.startsWith('feature/')) {
-              try {
-                await github.rest.git.deleteRef({
-                  owner: context.repo.owner,
-                  repo: context.repo.name,
-                  ref: `heads/${branch}`
-                });
-                console.log(`Deleted branch: ${branch}`);
-              } catch (error) {
-                console.log(`Error deleting branch: ${error}`);
-              }
-            } else {
-              console.log('Not a feature branch, skipping deletion');
+            const isFeatureBranch = branch.startsWith('feature/');
+            core.setOutput('is-feature', isFeatureBranch.toString());
+            core.setOutput('branch-name', branch);
+
+      - name: Wait for 1 hour (feature branches only)
+        if: steps.check-branch.outputs.is-feature == 'true'
+        run: sleep 3600
+
+      - name: Delete branch
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const branch = '${{ steps.check-branch.outputs.branch-name }}';
+            try {
+              await github.rest.git.deleteRef({
+                owner: context.repo.owner,
+                repo: context.repo.name,
+                ref: `heads/${branch}`
+              });
+              console.log(`Deleted branch: ${branch}`);
+            } catch (error) {
+              console.log(`Error deleting branch: ${error}`);
             } 
