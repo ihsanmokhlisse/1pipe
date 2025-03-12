@@ -1,0 +1,46 @@
+name: Pull Request Protection
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  pull_request_review:
+    types: [submitted, dismissed]
+
+jobs:
+  check-review-requirements:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check review requirements
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { data: reviews } = await github.rest.pulls.listReviews({
+              owner: context.repo.owner,
+              repo: context.repo.name,
+              pull_number: context.payload.pull_request.number
+            });
+            
+            const approvedReviewers = new Set();
+            reviews.forEach(review => {
+              if (review.state === 'APPROVED') {
+                approvedReviewers.add(review.user.login);
+              }
+            });
+            
+            const requiredReviewers = 1;
+            const hasEnoughReviews = approvedReviewers.size >= requiredReviewers;
+            
+            await github.rest.checks.create({
+              owner: context.repo.owner,
+              repo: context.repo.name,
+              name: 'Review Requirements',
+              head_sha: context.payload.pull_request.head.sha,
+              status: 'completed',
+              conclusion: hasEnoughReviews ? 'success' : 'pending',
+              output: {
+                title: hasEnoughReviews ? 'Review requirements met' : 'Waiting for reviews',
+                summary: hasEnoughReviews 
+                  ? `✅ Pull request has ${approvedReviewers.size} approved review(s)`
+                  : `⏳ Pull request needs ${requiredReviewers - approvedReviewers.size} more approved review(s)`
+              }
+            }); 

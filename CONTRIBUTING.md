@@ -26,17 +26,26 @@ Before making any changes:
 1. Create a Merge Request (MR) from your feature branch to `main`
 2. Link the related issue in the MR description
 3. Fill out the merge request template
-4. Request review from at least one approver
+4. Request review from at least one reviewer
 5. Address any feedback and make necessary changes
 
-### 5. Merge Requirements
+### 5. Review Requirements
+- **Minimum Reviewers**: At least 1 approved review is required
+- **Stale Reviews**: Will be dismissed when new commits are pushed
+- **Review Resolution**: All review comments must be resolved
+- **Protected Branch**: Direct pushes to `main` are not allowed
+- **Status Checks**: All status checks must pass
+- **Linear History**: Maintained through rebase requirement
+
+### 6. Merge Requirements
 - At least 1 approval from a maintainer
 - All discussions must be resolved
 - All tests must pass
 - The branch must be up to date with `main`
+- Linear history must be maintained
 
-### 6. After Merge
-- Delete the feature branch
+### 7. After Merge
+- Feature branches are automatically deleted after 1 hour
 - Close the related issue
 - Update documentation if necessary
 
@@ -48,6 +57,9 @@ The `main` branch is protected with the following rules:
 - At least 1 approval is required for merge requests
 - All discussions must be resolved before merging
 - Branch must be up to date before merging
+- Stale approvals are automatically dismissed
+- Force pushes are not allowed
+- Branch deletion is not allowed
 
 ## Issue Template
 
