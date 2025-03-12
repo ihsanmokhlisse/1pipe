@@ -1,0 +1,33 @@
+name: Branch Cleanup
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  delete-branch:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
+    steps:
+      - name: Wait for 1 hour
+        run: sleep 3600
+        
+      - name: Delete branch
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const branch = context.payload.pull_request.head.ref;
+            if (branch.startsWith('feature/')) {
+              try {
+                await github.rest.git.deleteRef({
+                  owner: context.repo.owner,
+                  repo: context.repo.name,
+                  ref: `heads/${branch}`
+                });
+                console.log(`Deleted branch: ${branch}`);
+              } catch (error) {
+                console.log(`Error deleting branch: ${error}`);
+              }
+            } else {
+              console.log('Not a feature branch, skipping deletion');
+            } 
