@@ -1,0 +1,40 @@
+name: Default Branch Configuration
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'  # Run daily at midnight
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/default-branch-config.yml'
+
+jobs:
+  set-default-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set default branch to main
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            try {
+              const { data: repo } = await github.rest.repos.get({
+                owner: context.repo.owner,
+                repo: context.repo.name
+              });
+              
+              if (repo.default_branch !== 'main') {
+                await github.rest.repos.update({
+                  owner: context.repo.owner,
+                  repo: context.repo.name,
+                  default_branch: 'main'
+                });
+                console.log('Successfully set default branch to main');
+              } else {
+                console.log('Default branch is already set to main');
+              }
+            } catch (error) {
+              console.error('Error updating default branch:', error);
+              process.exit(1);
+            } 
